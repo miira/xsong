@@ -51,4 +51,29 @@ public class ChordRef {
 		this.chord = chord;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!(obj instanceof ChordRef)) return false;
+		ChordRef other = (ChordRef)obj;
+		if ((other.position == this.position) 
+			&& (other.chordId.equals(this.chordId))) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		// position itself is unique, this may be an average line length, 
+		// and if not, don't care, it's THE ANSWER
+		return position / 42;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(10);
+		sb.append(chordId).append(":").append(position);
+		return sb.toString();
+	}
 }

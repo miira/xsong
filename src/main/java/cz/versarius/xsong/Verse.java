@@ -4,7 +4,7 @@ public class Verse extends Part {
 
 	@Override
 	public String getTypeName() {
-		return "verse";
+		return PartType.VERSE.name().toLowerCase();
 	}
 
 }

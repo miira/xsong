@@ -34,11 +34,21 @@ public class Line {
 	}
 	
 	public int getChordLineLength() {
-		ChordRef last = chords.get(chords.size() - 1);
+		ChordRef last = getLastChord();
+		if (last == null) {
+			return 0;
+		}
 		return (last.getPosition() + last.getChord().getName().length());
 	}
 	
 	public void remove(ChordRef ref) {
 		chords.remove(ref);
+	}
+
+	public ChordRef getLastChord() {
+		if (chords.isEmpty()) {
+			return null;
+		}
+		return chords.get(chords.size() - 1);
 	}
 }

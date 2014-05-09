@@ -38,5 +38,9 @@ public abstract class Part {
 		return false;
 	}
 	
+	public int getLinesCount() {
+		return lines.size();
+	}
+	
 	public abstract String getTypeName();
 }

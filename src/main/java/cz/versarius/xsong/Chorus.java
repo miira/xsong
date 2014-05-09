@@ -4,7 +4,7 @@ public class Chorus extends Part {
 
 	@Override
 	public String getTypeName() {
-		return "chorus";
+		return PartType.CHORUS.name().toLowerCase();
 	}
 
 }
