@@ -33,6 +33,10 @@ public class Line {
 		return !((chords == null) || (chords.isEmpty()));
 	}
 	
+	public boolean hasAnyText() {
+		return !((text == null || text.trim().isEmpty()));
+	}
+	
 	public int getChordLineLength() {
 		ChordRef last = getLastChord();
 		if (last == null) {
