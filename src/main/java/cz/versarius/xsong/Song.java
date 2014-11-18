@@ -171,8 +171,11 @@ public class Song {
 	/**
 	 * Insert new part to the song.
 	 * @param line -1 create part before other parts, otherwise 0-based index of lines
+	 * @return true if it is empty verse (after another) and marker should be displayed
+	 *         false if the split was in the middle of other part, so the new part already contains chords 
+	 *         		and marker should not be displayed. highlight first chord in the new part
 	 */
-	public void insertPartAfter(int lineIdx, PartType type) {
+	public boolean insertPartAfter(int lineIdx, PartType type) {
 		Part newpart;
 		if (PartType.VERSE == type) {
 			newpart = new Verse();
@@ -181,6 +184,7 @@ public class Song {
 		}
 		if (lineIdx == -1) {
 			parts.add(0, newpart);
+			return true;
 		} else {
 			PartSearchResult res = findPart(lineIdx);
 			// after current
@@ -188,13 +192,16 @@ public class Song {
 			if (res.lastLine) {
 				// adding new part right after the end of the existing part
 				newpart.addLine(new Line());
+				return true;
 			} else {
 				// inserting new part at the middle of the existing part
 				// split lines between old and new part
-				for (int i = res.idx; i < res.idx + res.linesInPart; i++) {
-					Line line = res.part.getLines().remove(res.idx); // it shrinks during iteration
+				int movingLineIdxInPart = (res.idx + res.linesInPart) - lineIdx - 1;
+				for (int i = movingLineIdxInPart; i < res.linesInPart; i++) {
+					Line line = res.part.getLines().remove(movingLineIdxInPart); // it shrinks during iteration
 					newpart.addLine(line);
 				}
+				return false;
 			}
 		}
 	}
